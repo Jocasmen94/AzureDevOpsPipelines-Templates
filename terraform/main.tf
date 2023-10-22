@@ -12,3 +12,11 @@ resource "azurerm_resource_group" "rg" {
     environment = var.environment
   }
 }
+
+resource "azurerm_storage_account" "mystorageaccount" {
+  name                = var.storage_account_name
+  resource_group_name = var.resource_group_name
+  location            = "westeurope"
+  sku                 = "Standard_LRS"
+  kind                = "StorageV2"
+}
