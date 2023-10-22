@@ -71,24 +71,11 @@ stages:
       vmImage: ubuntu-latest
 
     steps:
-    - task: Terraform@2
-      displayName: Terraform Init
+    - task: AzureCLI@2
+      displayName: Destroy Terraform Resources
       inputs:
-        workingDirectory: $(tfWorkingDirectory)
-        command: init
-      env:
-        ARM_CLIENT_ID: $(system.variables['agent.servicePrincipal.clientId'])
-        ARM_CLIENT_SECRET: $(system.variables['agent.servicePrincipal.clientSecret'])
-        ARM_SUBSCRIPTION_ID: $(system.variables['agent.servicePrincipal.subscriptionId'])
-        ARM_TENANT_ID: $(system.variables['agent.servicePrincipal.tenantId'])
-
-    - task: Terraform@2
-      displayName: Terraform Destroy
-      inputs:
-        workingDirectory: $(tfWorkingDirectory)
-        command: destroy
-      env:
-        ARM_CLIENT_ID: $(system.variables['agent.servicePrincipal.clientId'])
-        ARM_CLIENT_SECRET: $(system.variables['agent.servicePrincipal.clientSecret'])
-        ARM_SUBSCRIPTION_ID: $(system.variables['agent.servicePrincipal.subscriptionId'])
-        ARM_TENANT_ID: $(system.variables['agent.servicePrincipal.tenantId'])
+        azureSubscription: ${{ variables.backendServiceArm }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az group delete --name ${{ variables.backendAzureRmResourceGroupName }} --yes
