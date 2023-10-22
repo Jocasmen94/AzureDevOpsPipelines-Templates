@@ -4,7 +4,7 @@ trigger:
 variables:
   backendServiceArm: 'demo'
   backendAzureRmResourceGroupName: 'resourcegroup-devops-tfstate'
-  backendAzureRmStorageAccountName: 'terraform0tfstate0'
+  backendAzureRmStorageAccountName: 'terraform0tfstate0-jocasmen'
   backendAzureRmContainerName: 'tfstate'
   location: 'westeurope'
   tfBackendEnvironment: tf_backend
